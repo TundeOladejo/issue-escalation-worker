@@ -1,0 +1,15 @@
+{
+  "name": "issue-escalation-worker",
+  "version": "1.0.0",
+  "main": "workers/escalationWorker.js",
+  "scripts": {
+    "start": "node workers/escalationWorker.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.5",
+    "bullmq": "^4.14.0",
+    "dayjs": "^1.11.10",
+    "ioredis": "^5.3.1",
+    "nodemailer": "^6.9.8"
+  }
+}
