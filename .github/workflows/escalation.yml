@@ -1,0 +1,30 @@
+name: Daily Escalation Worker
+
+on:
+  schedule:
+    - cron: "40 0 * * *" # Runs every day at 8 AM UTC
+  workflow_dispatch: # Allow manual triggering from GitHub UI
+
+jobs:
+  escalate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm install
+
+      - name: Run Escalation Worker
+        run: node workers/escalationWorker.js
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          MAIL_HOST: ${{ secrets.MAIL_HOST }}
